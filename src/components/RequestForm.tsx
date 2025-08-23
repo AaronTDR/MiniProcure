@@ -1,48 +1,50 @@
 import React, { useState } from "react";
+import { useBudgetStore } from "../store/useBudgetStore";
 
 const RequestForm: React.FC = () => {
   const [item, setItem] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState<number>(0);
+  const { addRequest } = useBudgetStore();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Request submitted:", { item, amount });
+    if (!item || amount <= 0) return;
+    addRequest(item, amount);
     setItem("");
-    setAmount("");
+    setAmount(0);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-4 bg-white rounded shadow"
+      className="p-4 bg-white shadow rounded-md mt-4 space-y-4"
     >
-      <h2 className="text-xl font-bold mb-4">Request Form</h2>
-
-      <label className="block mb-2">
-        Item:
+      <h2 className="text-lg font-semibold">Submit New Request</h2>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Item</label>
         <input
           type="text"
           value={item}
           onChange={(e) => setItem(e.target.value)}
-          className="w-full border p-2 rounded mt-1"
-          placeholder="Enter item name"
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+          placeholder="e.g., Laptop"
         />
-      </label>
-
-      <label className="block mb-4">
-        Amount:
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
+          Amount
+        </label>
         <input
           type="number"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="w-full border p-2 rounded mt-1"
-          placeholder="Enter amount"
+          onChange={(e) => setAmount(Number(e.target.value))}
+          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+          placeholder="e.g., 1200"
         />
-      </label>
-
+      </div>
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
         Submit Request
       </button>
