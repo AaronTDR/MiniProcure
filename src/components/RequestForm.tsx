@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useBudgetStore } from "../store/useBudgetStore";
 
+const inputStyles =
+  "mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200 text-gray-800 placeholder-gray-400";
+
 const RequestForm: React.FC = () => {
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState<number>(0);
@@ -26,7 +29,7 @@ const RequestForm: React.FC = () => {
           type="text"
           value={item}
           onChange={(e) => setItem(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+          className={inputStyles}
           placeholder="e.g., Laptop"
         />
       </div>
@@ -38,7 +41,7 @@ const RequestForm: React.FC = () => {
           type="number"
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+          className={inputStyles}
           placeholder="e.g., 1200"
         />
       </div>
